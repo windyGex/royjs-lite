@@ -1,7 +1,7 @@
 {
   "name": "@royjs/lite",
   "version": "0.1.0",
-  "description": "A tiny mvvm library for react",
+  "description": "A lite state manager based on react hooks",
   "main": "lib/index.js",
   "scripts": {
     "build": "rimraf lib && babel src --out-dir lib",
