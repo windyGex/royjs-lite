@@ -40,21 +40,14 @@ const store = new Store(
     }
 );
 
-@inject(store, true)
-class Child extends React.Component {
-    render() {
-        console.log('child render!');
-    }
-}
-
-const Child = memo(() => {
+const Child = () => {
     const list = useStore(state => state.list);
     return <span>{list.length}</span>;
-});
+};
 
 const App = () => {
     const count = useStore(state => state.count);
-    const { dispatch } = useDispatch();
+    const dispatch = useDispatch();
     return (
         <div>
             {count}
