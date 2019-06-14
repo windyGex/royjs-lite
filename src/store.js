@@ -1,6 +1,5 @@
 import Events from './events';
 import observable from './proxy';
-import DataSource from './data-source';
 import setValues from './plugins/set-values';
 import { isArray } from './utils';
 
@@ -120,15 +119,6 @@ class Store extends Events {
         if (!globalStore) {
             globalStore = this;
         }
-    }
-    get dataSource() {
-        return new DataSource({
-            url: this.url,
-            primaryKey: this.primaryKey
-        });
-    }
-    get request() {
-        return this.dataSource.request;
     }
     get(key) {
         return this.model.get(key);

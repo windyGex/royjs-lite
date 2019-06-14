@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-import Store from '../store';
+import Store from './store';
 import { StoreContext } from './provider';
 
 export function useStore(mapStateToProps) {
