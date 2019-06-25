@@ -1,38 +1,46 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Store from './store';
 import { StoreContext } from './provider';
+import { isPlainObject } from './utils';
 
 export function useStore(mapStateToProps) {
     const ctx = useContext(StoreContext);
     const store = ctx.store || Store.get();
     const [state, setState] = useState(() => mapStateToProps(store.state));
-    const deps = useRef({});
-    const get = useRef(data => {
-        deps.current[data.key] = true;
-    });
-    const change = useRef(obj => {
+    const deps = {};
+    const get = data => {
+        deps[data.key] = true;
+    };
+    const set = newState => {
+        if (Array.isArray(newState)) {
+            newState = [...newState];
+        } else if (isPlainObject(newState)) {
+            newState = { ...newState };
+        }
+        setState(newState);
+    };
+    const change = obj => {
         obj = Array.isArray(obj) ? obj : [obj];
         let matched;
         for (let index = 0; index < obj.length; index++) {
             const item = obj[index];
-            const match = Object.keys(deps.current).some(dep => item.key.indexOf(dep) === 0);
+            const match = Object.keys(deps).some(dep => item.key.indexOf(dep) === 0);
             if (match) {
                 matched = true;
             }
         }
         if (matched) {
-            const newState = mapStateToProps(store.state);
-            setState(newState);
+            let newState = mapStateToProps(store.state);
+            set(newState);
         }
-    });
+    };
     useEffect(() => {
-        store.on('get', get.current);
-        store.on('change', change.current);
-        const newState = mapStateToProps(store.state);
-        setState(newState);
+        store.on('get', get);
+        store.on('change', change);
+        mapStateToProps(store.state);
+        store.off('get', get);
         return () => {
-            store.off('get', get.current);
-            store.off('change', change.current);
+            store.off('change', change);
         };
     }, [store]);
 

@@ -3,7 +3,7 @@ import devtools from '../../src/plugins/devtools';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const logger = function(store) {
+const logger = function (store) {
     store.subscribe(obj => {
         console.log(obj.type, obj.payload, obj.state.toJSON());
     });
@@ -13,7 +13,7 @@ const store = new Store(
     {
         state: {
             count: 0,
-            list: [],
+            list: []
         },
         actions: {
             add(state, payload) {
@@ -32,18 +32,19 @@ const store = new Store(
                     }, 400);
                 });
                 this.dispatch('add');
-            },
-        },
+            }
+        }
     },
     {
-        plugins: [logger, devtools],
+        plugins: [logger, devtools]
     }
 );
 
-const Child = () => {
+const Child = React.memo(() => {
+    console.log('render');
     const list = useStore(state => state.list);
     return <span>{list.length}</span>;
-};
+});
 
 const App = () => {
     const count = useStore(state => state.count);
