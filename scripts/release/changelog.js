@@ -87,7 +87,7 @@ module.exports = function * changelog() {
 
 function getRemotePkgInfo(ignoreError = false) {
     return new Promise(function (resolve, reject) {
-        var requestUrl = 'http://registry.npm.alibaba-inc.com/@royjs/core';
+        var requestUrl = 'http://registry.npm.alibaba-inc.com/@royjs/lite';
 
         try {
             request({
