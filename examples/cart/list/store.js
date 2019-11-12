@@ -44,6 +44,6 @@ store.create('list', {
             } else {
                 item.quantity++;
             }
-        },
+        }
     }
 });

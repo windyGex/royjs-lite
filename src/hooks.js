@@ -5,12 +5,14 @@ import { isPlainObject } from './utils';
 
 export function useStore(mapStateToProps) {
     const ctx = useContext(StoreContext);
-    const store = ctx.store || Store.get();
-    const [state, setState] = useState(() => mapStateToProps(store.state));
+    const store = (ctx && ctx.store) || Store.get();
     const deps = {};
     const get = data => {
         deps[data.key] = true;
     };
+    store.on('get', get);
+    const [state, setState] = useState(() => mapStateToProps(store.state));
+    store.off('get', get);
     const set = newState => {
         if (Array.isArray(newState)) {
             newState = [...newState];
@@ -35,10 +37,7 @@ export function useStore(mapStateToProps) {
         }
     };
     useEffect(() => {
-        store.on('get', get);
         store.on('change', change);
-        mapStateToProps(store.state);
-        store.off('get', get);
         return () => {
             store.off('change', change);
         };
@@ -49,6 +48,6 @@ export function useStore(mapStateToProps) {
 
 export function useDispatch() {
     const ctx = useContext(StoreContext);
-    const store = ctx.store || Store.get();
+    const store = (ctx && ctx.store) || Store.get();
     return store.dispatch;
 }

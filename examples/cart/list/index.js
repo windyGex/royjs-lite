@@ -1,48 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { category, sortMethods } from '../config';
-import { connect } from '../../../src';
+import { useStore, useDispatch } from '../../../src/';
 import './store';
 
-@connect(state => state.list)
-export default class List extends React.Component {
-    add = item => {
-        this.props.dispatch('cart.addCartItem', item);
-    };
-    sort = value => {
-        this.props.dispatch('list.sortList', value);
-    };
-    filter = id => {
-        this.props.dispatch('list.fetch', {
-            category: id
-        });
-    };
-    renderCategory(data) {
+export default function List(props) {
+    const list = useStore(state => state.list);
+    const dispatch = useDispatch();
+    const renderCategory = data => {
         return data.map(item => {
             return (
                 <li
-                    className={`cate ${this.props.currentCategory === item.id ? 'tab-active' : ''}`}
+                    className={`cate ${list.currentCategory === item.id ? 'tab-active' : ''}`}
                     key={item.id}
-                    onClick={this.filter.bind(this, item.id)}>
+                    onClick={() => {
+                        dispatch('list.fetch', {
+                            category: item.id
+                        });
+                    }}>
                     {item.des}
                 </li>
             );
         });
-    }
-
-    renderFilter(data) {
+    };
+    const renderFilter = data => {
         return data.map(item => {
             return (
                 <li
-                    className={`filter-opt ${this.props.currentSort === item.value ? 'filter-active' : ''}`}
+                    className={`filter-opt ${list.currentSort === item.value ? 'filter-active' : ''}`}
                     key={item.value}
-                    onClick={this.sort.bind(this, item.value)}>
+                    onClick={() => {
+                        dispatch('list.sortList', item.value);
+                    }}>
                     {item.name}
                 </li>
             );
         });
-    }
-
-    renderList(data) {
+    };
+    const renderList = data => {
         return data.map(item => {
             return (
                 <li className="goods-item" key={item.id}>
@@ -58,33 +52,35 @@ export default class List extends React.Component {
                             </span>
                         </div>
                         <span className="des">{item.sales}人付款</span>
-                        <span className="save" onClick={this.add.bind(this, item)}>
+                        <span
+                            className="save"
+                            onClick={() => {
+                                dispatch('cart.addCartItem', item);
+                            }}>
                             +
                         </span>
                     </div>
                 </li>
             );
         });
-    }
-    componentDidMount() {
-        this.props.dispatch('list.fetch');
-    }
-    render() {
-        console.log('list, render');
-        return (
-            <div className="device" id="page-list">
-                <header>
-                    <span className="header-title">商品列表</span>
-                </header>
-                <div className="page">
-                    <div className="tab-wrap">
-                        <ul className="cate-tab">{this.renderCategory(category)}</ul>
-                    </div>
-                    <ul className="filter-bar">{this.renderFilter(sortMethods)}</ul>
-                    <ul className="goods-list">{this.renderList(this.props.goods)}</ul>
+    };
+    useEffect(() => {
+        dispatch('list.fetch');
+    }, []);
+    console.log('list, render');
+    return (
+        <div className="device" id="page-list">
+            <header>
+                <span className="header-title">商品列表</span>
+            </header>
+            <div className="page">
+                <div className="tab-wrap">
+                    <ul className="cate-tab">{renderCategory(category)}</ul>
                 </div>
-                {this.props.loading ? <div className="loading">loading...</div> : null}
+                <ul className="filter-bar">{renderFilter(sortMethods)}</ul>
+                <ul className="goods-list">{renderList(list.goods)}</ul>
             </div>
-        );
-    }
+            {list.loading ? <div className="loading">loading...</div> : null}
+        </div>
+    );
 }

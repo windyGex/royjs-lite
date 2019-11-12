@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Store } from '../../../src/';
-import devtools from '../../../src/plugins/devtools';
-import { useStore, useDispatch } from '../../../src/hooks/use';
-import Provider from '../../../src/hooks/provider';
+import { Store } from '../../src/';
+import devtools from '../../src/plugins/devtools';
+import { useStore, useDispatch } from '../../src/hooks';
+import Provider from '../../src/provider';
 
 const logger = function (store) {
     store.subscribe(obj => {

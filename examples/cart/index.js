@@ -1,4 +1,3 @@
-import {NavLink as Link, HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 import React from 'react';
 import {render} from 'react-dom';
 import store from './store';
@@ -16,10 +15,4 @@ class App extends React.Component {
     }
 }
 
-const routes = (<HashRouter>
-    <Switch>
-        <Route path="/" component={App} />
-    </Switch>
-</HashRouter>);
-
-render(routes, document.querySelector('#root'));
+render(<App />, document.querySelector('#root'));
