@@ -1,6 +1,6 @@
 {
   "name": "@royjs/lite",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A lite state manager based on react hooks",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,6 @@
     "test": "nyc --reporter=html --reporter=text mocha --require babel-core/register --colors ./test/*.spec.js",
     "test:watch": "nyc --reporter=html --reporter=text mocha --require babel-core/register --colors -w ./test/*.spec.js",
     "prepublish": "npm run build && npm run build:umd",
-    "example:todo": "parcel examples/todo-mvc/index.html",
     "example:counter": "parcel examples/counter/index.html",
     "example:cart": "parcel examples/cart/index.html",
     "example:pure": "parcel examples/pure/index.html",
@@ -68,7 +67,7 @@
     "chalk": "^2.4.1",
     "conventional-changelog": "^2.0.3",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-15": "^1.0.6",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^4.13.1",
     "eslint-loader": "^1.9.0",
     "fs-extra": "^7.0.0",
@@ -79,7 +78,7 @@
     "parcel": "^1.9.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-test-renderer": "^15.6.2",
+    "react-test-renderer": "^16.11.0",
     "request": "^2.88.0",
     "rimraf": "^2.6.2",
     "semver": "^5.6.0",
@@ -87,7 +86,6 @@
     "webpack": "^3.10.0",
     "yargs": "^10.0.3"
   },
-  "dependencies": {},
   "directories": {
     "example": "examples",
     "lib": "lib",

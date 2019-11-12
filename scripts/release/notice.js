@@ -22,7 +22,7 @@ module.exports = function * () {
         .replace(/\n+/g, '\n')
         .replace(/\(\[[\d\w]+\]\(https:\/\/[^\)]+\)\)/g, '');
 
-    const dingContent = `[公告] Royjs新版本发布通知
+    const dingContent = `[公告] @royjs/lite新版本发布通知
 - 版本号: ${packageInfo.version}
 - 发布人: ${username}
 
@@ -35,7 +35,7 @@ ${latestLog}`;
         yield ajaxPost(url, {
             msgtype: 'markdown',
             markdown: {
-                title: '[公告] Royjs新版本发布通知',
+                title: '[公告] @royjs/lite新版本发布通知',
                 text: dingContent
             }
         });
