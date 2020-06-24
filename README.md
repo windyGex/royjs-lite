@@ -1,4 +1,6 @@
-# RoyLite[Under Development] ![buildStatus](https://travis-ci.org/windyGex/royjs.svg?branch=master)
+# Using @royjs/core@2.x instead of it.
+
+## RoyLite[Under Development] ![buildStatus](https://travis-ci.org/windyGex/royjs.svg?branch=master)
 
 A lite state manager based on react hooks.
 
